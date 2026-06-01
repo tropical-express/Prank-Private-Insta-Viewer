@@ -1,0 +1,41 @@
+{
+  "name": "prank-private-instaviewer",
+  "version": "1.0.0",
+  "description": "Instagram viewer prank application",
+  "main": "main.js",
+  "author": "Jacob Yee <gnome2009123@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis portable",
+    "release": "electron-builder --publish never"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.jacobyee.prankprivateinstaviewer",
+    "productName": "Prank Private InstaViewer",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!dist/**",
+      "!node_modules/.cache/**",
+      "!.git/**",
+      "!.github/**"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

@@ -1,0 +1,57 @@
+
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Electron Application
+        run: npm run dist
+
+      - name: Create Source Tarball
+        shell: bash
+        run: |
+          mkdir release
+          git archive --format=tar HEAD | xz -9 > release/source.tar.xz
+
+      - name: Generate SHA256 Checksums
+        shell: pwsh
+        run: |
+          Remove-Item dist\SHA256SUMS.txt -ErrorAction SilentlyContinue
+
+          Get-ChildItem dist\*.exe | ForEach-Object {
+            $hash = (Get-FileHash $_.FullName -Algorithm SHA256).Hash
+            "$hash  $($_.Name)"
+          } | Out-File dist\SHA256SUMS.txt
+
+          $tarHash = (Get-FileHash release\source.tar.xz -Algorithm SHA256).Hash
+          "$tarHash  source.tar.xz" | Add-Content dist\SHA256SUMS.txt
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.exe
+            dist/SHA256SUMS.txt
+            release/source.tar.xz

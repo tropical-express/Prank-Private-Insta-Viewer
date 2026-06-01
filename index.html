@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Instaviewer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="icon" href="favicon.png">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#0b0b0b;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.app{
+  width:340px;
+  background:#111;
+  border:1px solid #400;
+  padding:16px;
+  text-align:center;
+}
+h1{color:#ff2d2d;margin-bottom:10px}
+input,button{
+  width:100%;
+  padding:8px;
+  margin-top:6px;
+}
+input{
+  background:#000;
+  color:#fff;
+  border:1px solid #400;
+}
+button{
+  background:#ff2d2d;
+  color:#000;
+  border:none;
+  cursor:pointer;
+}
+
+#error{display:none;color:#ff6666;font-size:12px}
+#progress{margin-top:8px;font-size:14px}
+#meme{display:none;margin-top:10px}
+#meme img{width:100%;border:1px solid #333}
+
+.banner{
+  display:none;
+  margin-top:6px;
+  padding:6px;
+  font-weight:bold;
+}
+.normal{background:#444}
+.rare{background:#ff2d2d;color:#000}
+.ultra{background:#7b5cff}
+.legendary{background:gold;color:#000}
+</style>
+</head>
+
+<body>
+<div class="app">
+  <h1>Instaviewer</h1>
+
+  <input id="usernameInput" placeholder="Instagram username">
+  <div id="error">Enter a username</div>
+
+  <button id="scanBtn">Run Scan</button>
+
+  <div id="progress"></div>
+
+  <div id="rarityBanner" class="banner"></div>
+
+  <div id="meme">
+    <img id="memeImg">
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
